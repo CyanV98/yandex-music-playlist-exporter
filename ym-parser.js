@@ -1,7 +1,7 @@
 (function collectAllTracks() {
     const SCROLL_HEIGHT = 300;
-    const TICK_DELAY = 50;
-    const FINAL_CHECK_DELAY = 200;
+    const TICK_DELAY = 100;
+    const FINAL_CHECK_DELAY = 2000;
 
     let lastSavedIndex = -1;
     let previousHeight = 0;
@@ -24,8 +24,7 @@
 
         return newTracks;
     }
-
-    // Сохраняем треки из списка newTracks
+    
     function saveTracks(newTracks) {
         const collected = [];
 
@@ -66,8 +65,7 @@
     }
 
     const playlistTitle = document.querySelector('h1.PageHeaderTitle_heading__UADXi span').textContent.trim();
-
-    // Проверка и сбор данных
+    
     function Tick() {
         playlistContainer.scrollTop += SCROLL_HEIGHT;
 
@@ -79,6 +77,7 @@
             }
 
             if (playlistContainer.scrollTop === previousHeight) {
+                console.log("Почти все...");
                 setTimeout(() => {
                     const newTracks = collectNewTracks();
 
@@ -86,22 +85,21 @@
                         saveTracks(newTracks);
                     }
                     finish();
-                }, 1000);
+                }, FINAL_CHECK_DELAY);
             } else {
                 previousHeight = playlistContainer.scrollTop;
                 scheduleNextTick();
             }
-        }, FINAL_CHECK_DELAY);
+        }, TICK_DELAY);
     }
 
-    // Запланировать следующий скролл
     function scheduleNextTick() {
         setTimeout(() => {
             Tick();
         }, TICK_DELAY);
     }
 
-    // Завершение — вывод и экспорт
+
     function finish() {
         const tracksList = localStorage.getItem('music_tracks') || '';
         const trackCount = tracksList.split('\n').filter(t => t.trim()).length;
@@ -116,11 +114,9 @@
         URL.revokeObjectURL(url);
         console.log("Скачивание файла начато. Найдено " + trackCount + " уникальных песен!");
 
-        // Чистим localStorage после завершения
         localStorage.removeItem('music_tracks');
     }
 
-    // Проверяем наличие контейнера с треками
     function startWhenReady() {
         const playlistContainer = document.querySelector('[data-test-id="virtuoso-scroller"]');
         if (playlistContainer) {
@@ -132,7 +128,7 @@
         }
     }
 
-    // Запуск процесса
+
     console.log("Ищем контейнер с треками...");
     localStorage.removeItem('music_tracks');
     startWhenReady();
