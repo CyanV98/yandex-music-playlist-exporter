@@ -5,12 +5,31 @@
 
     let lastSavedIndex = -1;
     let previousHeight = 0;
+    let scrollContainer = null;
 
+    function findScrollContainerByStyle() {
+        const divs = Array.from(document.querySelectorAll('div'));
+        return divs.find(div => {
+            const style = getComputedStyle(div);
+            return (
+                (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
+                div.scrollHeight > div.clientHeight &&
+                div.querySelector('div[data-index]')
+            );
+        });
+    }
+
+    function findScrollContainer() {
+        const known = document.querySelector('[data-test-id="virtuoso-scroller"]') ||
+                      document.querySelector('div[class*="R82T6DkaZ0LqUcIf5cQQ"]');
+
+        if (known && known.querySelector('div[data-index]')) return known;
+
+        return findScrollContainerByStyle();
+    }
 
     function collectNewTracks() {
         const trackContainers = document.querySelectorAll('div[data-index]');
-        if (!trackContainers.length) return [];
-
         const newTracks = [];
 
         trackContainers.forEach(trackContainer => {
@@ -20,26 +39,49 @@
             }
         });
 
-        if (!newTracks.length) return [];
-
         return newTracks;
     }
-    
+
+    function getGlobalArtist() {
+        const separatedArtists = document.querySelector('[class^="SeparatedArtists_root_"]');
+        if (separatedArtists) {
+            const links = separatedArtists.querySelectorAll('a');
+            return Array.from(links).map(a => a.textContent.trim()).join(', ');
+        }
+
+        // Альбом: берем исполнителя из h2 после h1
+        const albumTitle = document.querySelector('h1 span')?.textContent?.trim();
+        const possibleArtist = document.querySelector('h1 + h2 span')?.textContent?.trim();
+
+        if (possibleArtist && possibleArtist !== albumTitle) {
+            return possibleArtist;
+        }
+
+        return null;
+    }
+
     function saveTracks(newTracks) {
         const collected = [];
+        const globalArtist = getGlobalArtist();
 
         newTracks.forEach(({container, index}) => {
             const trackLink = container.querySelector('a[href*="/track/"]');
             const artistContainer = container.querySelector('[class^="SeparatedArtists_root_"]');
 
-            if (!trackLink || !artistContainer) return;
+            let title = null;
+            let artists = [];
 
-            const titleElement = trackLink.querySelector('span');
-            const title = titleElement ? titleElement.textContent.trim() : null;
+            if (trackLink) {
+                const titleElement = trackLink.querySelector('span');
+                title = titleElement ? titleElement.textContent.trim() : null;
+            }
 
-            const artists = Array.from(artistContainer.querySelectorAll('a')).map(a =>
-                a.textContent.trim()
-            );
+            if (artistContainer) {
+                artists = Array.from(artistContainer.querySelectorAll('a')).map(a => a.textContent.trim());
+            } else if (globalArtist) {
+                artists = [globalArtist];
+            }
+
             const uniqueArtists = [...new Set(artists)].join(', ');
 
             if (title && uniqueArtists) {
@@ -49,25 +91,23 @@
         });
 
         if (collected.length) {
-            localStorage.setItem('music_tracks', [...new Set([
-                ...localStorage.getItem('music_tracks')?.split('\n') || [],
-                ...collected
-            ])].join('\n'));
+            const previousTracks = localStorage.getItem('music_tracks')?.split('\n') || [];
+            const newSet = [...new Set([...previousTracks, ...collected])];
+            localStorage.setItem('music_tracks', newSet.join('\n'));
         }
 
         return collected.length > 0;
     }
 
-    const playlistContainer = document.querySelector('[data-test-id="virtuoso-scroller"]');
-    if (!playlistContainer) {
-        console.error("Контейнер с треками не найден");
-        return;
-    }
+    const playlistTitle = document.querySelector('h1 span')?.textContent.trim() || 'playlist';
 
-    const playlistTitle = document.querySelector('h1.PageHeaderTitle_heading__UADXi span').textContent.trim();
-    
     function Tick() {
-        playlistContainer.scrollTop += SCROLL_HEIGHT;
+        if (!scrollContainer) {
+            console.error("Скроллер не найден. Прерывание.");
+            return;
+        }
+
+        scrollContainer.scrollTop += SCROLL_HEIGHT;
 
         setTimeout(() => {
             const newTracks = collectNewTracks();
@@ -76,18 +116,17 @@
                 saveTracks(newTracks);
             }
 
-            if (playlistContainer.scrollTop === previousHeight) {
-                console.log("Почти все...");
+            if (scrollContainer.scrollTop === previousHeight) {
+                console.log("Прокрутка завершена, финальная проверка...");
                 setTimeout(() => {
-                    const newTracks = collectNewTracks();
-
-                    if (newTracks.length) {
-                        saveTracks(newTracks);
+                    const finalTracks = collectNewTracks();
+                    if (finalTracks.length) {
+                        saveTracks(finalTracks);
                     }
                     finish();
                 }, FINAL_CHECK_DELAY);
             } else {
-                previousHeight = playlistContainer.scrollTop;
+                previousHeight = scrollContainer.scrollTop;
                 scheduleNextTick();
             }
         }, TICK_DELAY);
@@ -98,7 +137,6 @@
             Tick();
         }, TICK_DELAY);
     }
-
 
     function finish() {
         const tracksList = localStorage.getItem('music_tracks') || '';
@@ -112,24 +150,30 @@
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-        console.log("Скачивание файла начато. Найдено " + trackCount + " уникальных песен!");
+        console.log("Скачано " + trackCount + " уникальных треков!");
 
         localStorage.removeItem('music_tracks');
     }
 
     function startWhenReady() {
-        const playlistContainer = document.querySelector('[data-test-id="virtuoso-scroller"]');
-        if (playlistContainer) {
-            console.log("Контейнер плейлиста \"" + playlistTitle + "\" найден, начинаем сбор...");
-            Tick();
+        scrollContainer = findScrollContainer();
+
+        if (scrollContainer) {
+            console.log("Скроллер найден. Прокручиваем вверх...");
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            scrollContainer.scrollTop = 0;
+
+            setTimeout(() => {
+                console.log("Начинаем сбор треков...");
+                Tick();
+            }, 500);
         } else {
-            console.log("Контейнер ещё не загружен, ждём...");
+            console.log("Скроллер ещё не готов, ждём...");
             setTimeout(startWhenReady, 2000);
         }
     }
 
-
-    console.log("Ищем контейнер с треками...");
+    console.log("Поиск контейнера для прокрутки и треков...");
     localStorage.removeItem('music_tracks');
     startWhenReady();
 })();
