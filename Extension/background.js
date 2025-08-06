@@ -25,12 +25,10 @@ async function checkForUpdate() {
   }
 }
 
-// При установке / обновлении
 chrome.runtime.onInstalled.addListener(() => {
   checkForUpdate();
 });
 
-// Можно по расписанию (например, раз в день) или при старте браузера
 chrome.runtime.onStartup.addListener(() => {
   checkForUpdate();
 });

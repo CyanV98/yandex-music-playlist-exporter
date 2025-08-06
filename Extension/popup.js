@@ -14,7 +14,6 @@ const EXTENSION_VERSION = "1.2";
 let currentTabId = null;
 let isRunning = false;
 
-// Простая обёртка для i18n
 function i18n(key) {
   return chrome.i18n.getMessage(key) || key;
 }
@@ -132,7 +131,6 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
-// Локализация текстов при инициализации
 function applyI18n() {
   startBtn.textContent = i18n("start_button");
   settingsToggle.textContent = i18n("settings");
