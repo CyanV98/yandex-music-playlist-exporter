@@ -1,0 +1,124 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  width: 300px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+h1 {
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.status {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+button {
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+settings-button {
+  padding: 6px;
+  width: 200px;
+  text-align: center;
+  font-size: 12px;
+  border: none;
+  margin: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #66b0ff;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.settings {
+  padding: 8px;
+  background-color: #efefef;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.settings label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.settings input {
+  width: 100%;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.version {
+  font-size: 11px;
+  color: #666;
+}
+
+.autor{
+	font-size: 9px;
+	color: #666;
+	text-align: justify;
+}
+
+.update {
+  color: red;
+  font-weight: bold;
+}
+
+.tooltip {
+  position: relative;
+  cursor: help;
+  color: #555;
+  margin-left: 5px;
+  display: inline-block;
+}
+}
+

@@ -1,0 +1,56 @@
+{
+  "status_checking": {
+    "message": "Checking page..."
+  },
+  "start_button": {
+    "message": "Start export"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "scroll_height": {
+    "message": "Scroll height"
+  },
+  "scroll_height_tooltip": {
+    "message": "Number of pixels to scroll per tick"
+  },
+  "tick_delay": {
+    "message": "Tick delay"
+  },
+  "tick_delay_tooltip": {
+    "message": "Delay between scrolls in milliseconds"
+  },
+  "final_check_delay": {
+    "message": "Final check delay"
+  },
+  "final_check_delay_tooltip": {
+    "message": "Wait time before final check in milliseconds"
+  },
+  "start_button": {
+    "message": "Start export"
+  },
+  "stop_button": {
+    "message": "Stop"
+  },
+  "status_open_playlist": {
+    "message": "Open a playlist on music.yandex.ru"
+  },
+  "status_playlist_found": {
+    "message": "Playlist found"
+  },
+  "status_playlist_not_found": {
+    "message": "Playlist not found"
+  },
+  "status_running": {
+    "message": "Running..."
+  },
+  "status_stopped": {
+    "message": "Stopped"
+  },
+  "status_done": {
+    "message": "Done!"
+  },
+  "status_error": {
+    "message": "Export error"
+  }
+}
