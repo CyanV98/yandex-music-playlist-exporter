@@ -1,7 +1,6 @@
-const CURRENT_VERSION = "1.2";
+const CURRENT_VERSION = chrome.runtime.getManifest().version;
 const GITHUB_RELEASES_API = "https://api.github.com/repos/CyanV98/yandex-music-playlist-exporter/releases/latest";
 
-// Проверка обновлений на GitHub
 async function checkForUpdate() {
   try {
     const res = await fetch(GITHUB_RELEASES_API);

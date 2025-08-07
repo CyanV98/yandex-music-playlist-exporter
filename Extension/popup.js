@@ -9,7 +9,7 @@ const finalCheckDelayInput = document.getElementById("finalCheckDelay");
 
 const updateNotice = document.getElementById("updateNotice");
 const GITHUB_RELEASES_URL = "https://github.com/CyanV98/yandex-music-playlist-exporter/releases/latest";
-const EXTENSION_VERSION = "1.2";
+const EXTENSION_VERSION = chrome.runtime.getManifest().version;
 
 let currentTabId = null;
 let isRunning = false;
