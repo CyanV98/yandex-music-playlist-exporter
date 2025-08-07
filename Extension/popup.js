@@ -8,8 +8,6 @@ const tickDelayInput = document.getElementById("tickDelay");
 const finalCheckDelayInput = document.getElementById("finalCheckDelay");
 
 const updateNotice = document.getElementById("updateNotice");
-const GITHUB_RELEASES_URL = "https://github.com/CyanV98/yandex-music-playlist-exporter/releases/latest";
-const EXTENSION_VERSION = chrome.runtime.getManifest().version;
 
 let currentTabId = null;
 let isRunning = false;
@@ -223,3 +221,11 @@ document.querySelectorAll('.tooltip').forEach(el => {
   await detectPlaylistOnPage();
   checkForUpdate();
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+  var manifest = chrome.runtime.getManifest();
+  var versionElem = document.getElementById('version');
+  if (versionElem && manifest && manifest.version) {
+    versionElem.textContent = 'v' + manifest.version;
+  }
+});

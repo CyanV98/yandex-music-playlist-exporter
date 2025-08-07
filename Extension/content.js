@@ -164,7 +164,8 @@ function finish() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = (document.querySelector("h1 span")?.textContent.trim() || "playlist") + ".txt";
+  const rawTitle = document.querySelector("h1 span")?.textContent.trim() || "playlist";
+  link.download = rawTitle + ".txt";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
