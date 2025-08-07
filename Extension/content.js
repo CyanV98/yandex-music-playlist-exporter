@@ -33,8 +33,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === "STOP_EXPORT") {
-    isExporting = false;
-	localStorage.removeItem("music_tracks")
+    	isExporting = false;
+	localStorage.removeItem("music_tracks");
   }
 });
 
