@@ -36,7 +36,7 @@ button {
   transition: background-color 0.2s;
 }
 
-settings-button {
+.settings-button {
   padding: 6px;
   width: 200px;
   text-align: center;
