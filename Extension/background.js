@@ -1,4 +1,4 @@
-const CURRENT_VERSION = "1.0";
+const CURRENT_VERSION = "1.2";
 const GITHUB_RELEASES_API = "https://api.github.com/repos/CyanV98/yandex-music-playlist-exporter/releases/latest";
 
 // Проверка обновлений на GitHub
