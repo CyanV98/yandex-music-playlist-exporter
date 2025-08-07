@@ -17,7 +17,7 @@ async function checkForUpdate() {
       updateUrl: data.html_url || null
     });
   } catch (err) {
-    console.warn("Не удалось проверить обновления:", err);
+    console.warn("Failed to check for updates:", err);
     chrome.storage.local.set({
       updateAvailable: false,
       updateUrl: null
