@@ -26,9 +26,6 @@
   "final_check_delay_tooltip": {
     "message": "Время ожидания перед финальной проверкой"
   },
-  "start_button": {
-    "message": "Начать экспорт"
-  },
   "stop_button": {
     "message": "Остановить"
   },
