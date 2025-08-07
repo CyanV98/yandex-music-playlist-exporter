@@ -26,9 +26,6 @@
   "final_check_delay_tooltip": {
     "message": "Wait time before final check in milliseconds"
   },
-  "start_button": {
-    "message": "Start export"
-  },
   "stop_button": {
     "message": "Stop"
   },
