@@ -1,0 +1,53 @@
+{
+  "status_checking": {
+    "message": "Проверка страницы..."
+  },
+  "start_button": {
+    "message": "Начать экспорт"
+  },
+  "settings": {
+    "message": "Настройки"
+  },
+  "scroll_height": {
+    "message": "Высота прокрутки"
+  },
+  "scroll_height_tooltip": {
+    "message": "Количество пикселей, на которое скроллится страница за тик"
+  },
+  "tick_delay": {
+    "message": "Задержка"
+  },
+  "tick_delay_tooltip": {
+    "message": "Задержка между скроллами в миллисекундах"
+  },
+  "final_check_delay": {
+    "message": "Конечная задержка"
+  },
+  "final_check_delay_tooltip": {
+    "message": "Время ожидания перед финальной проверкой"
+  },
+  "stop_button": {
+    "message": "Остановить"
+  },
+  "status_open_playlist": {
+    "message": "Открой плейлист music.yandex.ru"
+  },
+  "status_playlist_found": {
+    "message": "Плейлист найден"
+  },
+  "status_playlist_not_found": {
+    "message": "Плейлист не найден"
+  },
+  "status_running": {
+    "message": "Выполнение..."
+  },
+  "status_stopped": {
+    "message": "Остановлено"
+  },
+  "status_done": {
+    "message": "Готово!"
+  },
+  "status_error": {
+    "message": "Ошибка экспорта"
+  }
+}

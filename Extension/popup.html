@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yandex Music Exporter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Yandex Music Playlist Exporter</h1>
+<div id="status" class="status" data-i18n="status_checking"></div>
+<button id="startBtn" disabled data-i18n="start_button"></button>
+<button id="settingsToggle" data-i18n="settings" class="settings-button"></button>
+
+<div id="settingsPanel" class="settings hidden">
+  <label>
+    <span data-i18n="scroll_height"></span>
+    <span class="tooltip" data-i18n-tooltip="scroll_height_tooltip">🛈</span>
+    <input type="number" id="scrollHeight" value="300">
+  </label>
+  <label>
+    <span data-i18n="tick_delay"></span>
+    <span class="tooltip" data-i18n-tooltip="tick_delay_tooltip">🛈</span>
+    <input type="number" id="tickDelay" value="100">
+  </label>
+  <label>
+    <span data-i18n="final_check_delay"></span>
+    <span class="tooltip" data-i18n-tooltip="final_check_delay_tooltip">🛈</span>
+    <input type="number" id="finalCheckDelay" value="2000">
+  </label>
+</div>
+
+    <div class="footer">
+      <a href="https://github.com/CyanV98/yandex-music-playlist-exporter" target="_blank">GitHub</a>
+      <div class="author"> by CyanV</div>
+      <div class="version">
+        <span id="version"></span> <span id="updateNotice" class="update hidden">— <a href="#" target="_blank">Update available</a></span>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
+
